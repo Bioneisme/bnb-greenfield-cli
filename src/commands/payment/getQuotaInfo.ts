@@ -1,6 +1,4 @@
-
 import { GreenfieldClient } from "../../utils/sdk";
-
 
 // Create an object with the required properties
 
