@@ -5,6 +5,7 @@ import chalk from "chalk";
 import figlet from "figlet";
 import { version } from "../commands/version";
 import "./sp";
+import "./account";
 
 clear();
 console.log(

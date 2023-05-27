@@ -1,6 +1,6 @@
 {
   "name": "@bioneisme/greenfield-cli",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "CLI For BNB Greenfield SDK",
   "main": "index.js",
   "type": "node",
