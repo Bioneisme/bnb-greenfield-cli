@@ -6,6 +6,7 @@ import figlet from "figlet";
 import { version } from "../commands/version";
 import "./sp";
 import "./account";
+import "./payment"
 
 clear();
 console.log(
