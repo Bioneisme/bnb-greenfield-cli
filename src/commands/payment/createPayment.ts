@@ -7,7 +7,6 @@ import { MsgDeposit, MsgDisableRefund, MsgWithdraw } from '@bnb-chain/greenfield
 
 export async function createDeposit(creator:string, to:string, amount:string) {
     try {
-
         const deposit: MsgDeposit  = {
             creator: creator,
             to: to,
