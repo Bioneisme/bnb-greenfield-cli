@@ -1,0 +1,52 @@
+{
+  "name": "@bioneisme/greenfield-cli",
+  "version": "1.0.0",
+  "description": "CLI For BNB Greenfield SDK",
+  "main": "index.js",
+  "type": "node",
+  "bin": {
+    "greenfield-cli": "./dist/src/index.js"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc -p .",
+    "prettier": "prettier ./src --write",
+    "lint": "eslint ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bioneisme/bnb-greenfield-cli.git"
+  },
+  "keywords": [
+    "bnb",
+    "greenfield",
+    "cli",
+    "typescript",
+    "node",
+    "commander"
+  ],
+  "author": "bioneisme",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bioneisme/bnb-greenfield-cli/issues"
+  },
+  "homepage": "https://github.com/Bioneisme/bnb-greenfield-cli#readme",
+  "devDependencies": {
+    "@types/node": "^20.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@bnb-chain/greenfield-chain-sdk": "^0.2.0",
+    "@types/clear": "^0.1.2",
+    "@types/figlet": "^1.5.6",
+    "chalk": "~4.1.2",
+    "clear": "^0.1.0",
+    "commander": "^10.0.1",
+    "conf": "^11.0.1",
+    "figlet": "^1.6.0"
+  }
+}
