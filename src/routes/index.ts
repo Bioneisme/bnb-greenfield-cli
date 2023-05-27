@@ -7,6 +7,8 @@ import { version } from "../commands/version";
 import "./sp";
 import "./account";
 import "./payment"
+import "./bucket"
+import "./object"
 
 clear();
 console.log(
