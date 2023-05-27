@@ -6,8 +6,8 @@ export async function getPaymentAccount(acc: QueryGetPaymentAccountRequest) {
     const account = await GreenfieldClient.client.account.getPaymentAccount(
       acc
     );
-    console.log(account);
+    console.log(account.paymentAccount);
   } catch (e) {
-    console.error(`Account '${acc}' not found: ${e}`);
+    console.error(`payment account '${acc.addr}' not found: ${e}`);
   }
 }

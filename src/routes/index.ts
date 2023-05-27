@@ -1,12 +1,13 @@
 import { program } from "commander";
+import chalk from "chalk";
+import { version } from "../commands/version";
 import { version as cliVersion } from "../../package.json";
 import clear from "clear";
-import chalk from "chalk";
 import figlet from "figlet";
-import { version } from "../commands/version";
 import "./sp";
 import "./account";
 import "./payment";
+import "./system";
 
 clear();
 console.log(

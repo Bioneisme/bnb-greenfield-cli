@@ -1,20 +1,41 @@
+import { createPaymentAccount } from "../commands/payment/createPaymentAccount";
+import { getPaymentAccount } from "../commands/payment/getPaymentAccount";
+import { getPaymentAccountsByOwner } from "../commands/payment/getPaymentAccountsByOwner";
+import { transfer } from "../commands/payment/transfer";
+import { QueryGetPaymentAccountRequest } from "@bnb-chain/greenfield-cosmos-types/greenfield/payment/query";
+import { MsgCreatePaymentAccount } from "@bnb-chain/greenfield-cosmos-types/greenfield/payment/tx";
 import { program } from "commander";
-import { createDeposit } from "../commands/payment/createPayment";
-import { withdraw } from "../commands/payment/withdraw";
 
-const payment = program.command("payment").description("storage providers");
+const payment = program.command("payment").description("payment");
 
 payment
-  .command("deposit <from> <to> <amount>")
-  .description(" deposit from owner's account to the payment account ")
-  .action(async (from, to, amount) => {
-    await createDeposit(from, to, amount);
+  .command("create-payment")
+  .description("create payment account")
+  .action(async () => {
+    await createPaymentAccount();
   });
 
 payment
-  .command("withdraw <fromAddress> <amount>")
-  .description("withdraw from a payment account to owner's account")
-  .action(async (fromAddress: string, amount: string) => {
-    await withdraw(fromAddress, amount);
+  .command("get-payment <address>")
+  .description("get payment account")
+  .action(async (address) => {
+    const acc: QueryGetPaymentAccountRequest = {
+      addr: address,
+    };
+    await getPaymentAccount(acc);
+  });
+
+payment
+  .command("get-payments")
+  .description("get payment accounts by owner")
+  .action(async () => {
+    await getPaymentAccountsByOwner();
+  });
+
+payment
+  .command("transfer <to> <amount>")
+  .description("transfer")
+  .action(async (to, amount) => {
+    await transfer(to, amount);
   });
 export default payment;
