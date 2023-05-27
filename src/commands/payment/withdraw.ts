@@ -10,7 +10,6 @@ export async function withdraw(fromAddress:string, amount:string) {
         const acc: QueryGetPaymentAccountRequest = {
             addr: fromAddress,
         };
-
         const msgWithDraw:MsgWithdraw ={
             creator: acc.addr ,
             from: fromAddress,
