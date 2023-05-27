@@ -13,6 +13,7 @@ import {File} from "buffer";
 
 export async function downloadObject(urlPath:string, downloadToFilePath:string ) {
     try {
+        // @ts-ignore
         const [bucketName, objectName] = parseBucketAndObject(urlPath);
         const objectPropsType:IGetObjectPropsType={
             bucketName:bucketName,
