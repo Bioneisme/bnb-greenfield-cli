@@ -47,6 +47,7 @@
     "clear": "^0.1.0",
     "commander": "^10.0.1",
     "conf": "^11.0.1",
-    "figlet": "^1.6.0"
+    "figlet": "^1.6.0",
+    "web3-eth-accounts": "^1.10.0"
   }
 }

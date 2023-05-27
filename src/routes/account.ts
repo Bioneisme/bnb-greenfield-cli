@@ -6,6 +6,7 @@ import { MsgCreatePaymentAccount } from "@bnb-chain/greenfield-cosmos-types/gree
 import { getPaymentAccount } from "../commands/account/getPaymentAccount";
 import { QueryGetPaymentAccountRequest } from "@bnb-chain/greenfield-cosmos-types/greenfield/payment/query";
 import { transfer } from "../commands/account/transfer";
+import { createWeb3Account } from "../commands/account/createWeb3Account";
 
 const account = program.command("account").description("account");
 
@@ -24,7 +25,7 @@ account
   });
 
 account
-  .command("create <address>")
+  .command("createPayment <address>")
   .description("create payment account")
   .action(async (address) => {
     const acc: MsgCreatePaymentAccount = {
@@ -48,5 +49,12 @@ account
   .description("transfer")
   .action(async (from, to, amount) => {
     await transfer(from, to, amount); // TODO: fix this shit
+  });
+
+account
+  .command("create")
+  .description("create web3 account")
+  .action(async () => {
+    await createWeb3Account();
   });
 export default account;
