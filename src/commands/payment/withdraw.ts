@@ -10,10 +10,7 @@ export async function withdraw(fromAddress:string, amount:string) {
         const acc: QueryGetPaymentAccountRequest = {
             addr: fromAddress,
         };
-        const msg:MsgDisableRefund ={
-           owner:"ad",
-            addr:"saas"
-        }
+
         const msgWithDraw:MsgWithdraw ={
             creator: acc.addr ,
             from: fromAddress,
