@@ -6,8 +6,10 @@ import clear from "clear";
 import figlet from "figlet";
 import "./sp";
 import "./account";
-import "./payment";
 import "./system";
+import "./payment";
+import "./bucket";
+import "./object";
 
 clear();
 console.log(
