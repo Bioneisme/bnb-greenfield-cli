@@ -3,7 +3,7 @@ import { program } from "commander";
 import { createFolder } from "../commands/object/createFolder";
 import { downloadObject } from "../commands/object/downloadObject";
 
-const object = program.command("object").description("object");
+const object = program.command("object").description("object operations");
 
 object
   .command("put <visibility> <filePath> <bucketNameAndPath>")

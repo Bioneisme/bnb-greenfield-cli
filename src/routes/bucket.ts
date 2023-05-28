@@ -6,7 +6,7 @@ import { deleteBucket } from "../commands/bucket/deleteBucket";
 import { getBucketById } from "../commands/bucket/getBucketById";
 import { getBucketByName } from "../commands/bucket/getBucketByName";
 
-const bucket = program.command("bucket").description("bucket");
+const bucket = program.command("bucket").description("bucket operations");
 
 bucket
   .command("create <bucketName>")

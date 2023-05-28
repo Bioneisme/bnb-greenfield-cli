@@ -3,7 +3,7 @@ import { getAllowence } from "../commands/feegrant/getAllowence";
 import { grantAllowance } from "../commands/feegrant/grantAllowance";
 import { getAllowences } from "../commands/feegrant/getAllowences";
 
-const feegrant = program.command("feegrant").description("feegrant");
+const feegrant = program.command("feegrant").description("feegrant operations");
 
 feegrant
   .command("get-allowence <grantee>")

@@ -3,10 +3,9 @@ import { getPaymentAccount } from "../commands/payment/getPaymentAccount";
 import { getPaymentAccountsByOwner } from "../commands/payment/getPaymentAccountsByOwner";
 import { transfer } from "../commands/payment/transfer";
 import { QueryGetPaymentAccountRequest } from "@bnb-chain/greenfield-cosmos-types/greenfield/payment/query";
-import { MsgCreatePaymentAccount } from "@bnb-chain/greenfield-cosmos-types/greenfield/payment/tx";
 import { program } from "commander";
 
-const payment = program.command("payment").description("payment");
+const payment = program.command("payment").description("payment object");
 
 payment
   .command("create-payment")

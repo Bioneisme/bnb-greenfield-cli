@@ -4,7 +4,9 @@ import { mirrorBucket } from "../commands/crosschain/mirrorBucket";
 import { mirrorObject } from "../commands/crosschain/mirrorObject";
 import { mirrorGroup } from "../commands/crosschain/mirrorGroup";
 
-const crosschain = program.command("crosschain").description("crosschain");
+const crosschain = program
+  .command("crosschain")
+  .description("crosschain operations");
 
 crosschain
   .command("get-params")

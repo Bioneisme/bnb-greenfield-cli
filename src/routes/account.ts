@@ -7,7 +7,7 @@ import { QueryBalanceRequest } from "@bnb-chain/greenfield-cosmos-types/cosmos/b
 import { config } from "../utils/config";
 import { program } from "commander";
 
-const account = program.command("account").description("account");
+const account = program.command("account").description("account operations");
 
 account
   .command("my-info")
