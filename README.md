@@ -77,5 +77,25 @@ Display information about the current configuration
 greenfield-cli system info
 ```
 
+```
+Usage: index [options] [command]                                         
+
+Options:                                                                 
+  -v, --version   output the version number                              
+  -h, --help      display help for command                               
+                                                                         
+Commands:                                                                
+  sp              storage providers                                      
+  account         account operations                                     
+  system          system settings                                        
+  payment         payment object                                         
+  bucket          bucket operations                                      
+  object          object operations                                      
+  group           group operations                                       
+  feegrant        feegrant operations                                    
+  crosschain      crosschain operations                                  
+  help [command]  display help for command 
+```
+  
 ## Documentation
 https://bioneisme.github.io/greenfield-cli-docs/docs/installation
