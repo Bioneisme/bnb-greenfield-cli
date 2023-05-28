@@ -6,7 +6,7 @@ import { getPrivateKey } from "../../helpers/password";
 
 // Create an object with the required properties
 
-function getGroupNameByUrl(urlInfo: string): string {
+export function getGroupNameByUrl(urlInfo: string): string {
   const bucketName: string = parseBucket(urlInfo);
   if (bucketName === "") {
     throw new Error("fail to parse group name");
@@ -15,7 +15,7 @@ function getGroupNameByUrl(urlInfo: string): string {
   return bucketName;
 }
 
-function parseBucket(urlPath: string): string {
+export function parseBucket(urlPath: string): string {
   if (urlPath.includes("gnfd://")) {
     urlPath = urlPath.replace("gnfd://", "");
   }
