@@ -31,22 +31,22 @@ account
   });
 
 account
-  .command("my-balance <denom>")
+  .command("my-balance")
   .description("get my account balance")
-  .action(async (denom) => {
+  .action(async () => {
     const req: QueryBalanceRequest = {
       address: String(config.get("publicKey")),
-      denom,
+      denom: "BNB",
     };
     await getAccountBalance(req);
   });
 account
-  .command("balance <address> <denom>")
+  .command("balance <address>")
   .description("get account balance")
-  .action(async (address, denom) => {
+  .action(async (address) => {
     const req: QueryBalanceRequest = {
       address,
-      denom,
+      denom: "BNB",
     };
     await getAccountBalance(req);
   });

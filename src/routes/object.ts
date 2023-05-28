@@ -7,9 +7,7 @@ import { downloadObject } from "../commands/bucket/downloadObject";
 const object = program.command("object").description("object");
 
 object
-  .command(
-    "put <visibility> <filePath> <bucketNameAndPath>"
-  )
+  .command("put <visibility> <filePath> <bucketNameAndPath>")
   .description(
     'The "object put" command is used to upload a file from local which is less than 2G.'
   )
@@ -19,9 +17,7 @@ object
 
 object
   .command("create-folder <bucketNameAndPath>")
-  .description(
-    'Creates a Folder.'
-  )
+  .description("Creates a Folder.")
   .action(async (bucketNameAndPath) => {
     await createFolder(bucketNameAndPath);
   });

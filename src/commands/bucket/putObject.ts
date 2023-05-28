@@ -4,9 +4,9 @@ import { MsgUpdateBucketInfo } from "@bnb-chain/greenfield-cosmos-types/greenfie
 import { IGetCreateObjectApproval } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types";
 import fs from "fs";
 import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
-import {createFileStore} from "../../helpers/keystore";
-import {config} from "../../utils/config";
-import {parseBucketAndObject} from "../../utils/helpers";
+import { createFileStore } from "../../helpers/keystore";
+import { config } from "../../utils/config";
+import { parseBucketAndObject } from "../../utils/helpers";
 
 // Create an object with the required properties
 
@@ -16,9 +16,11 @@ export async function putObject(
   localFilepath: string
 ) {
   try {
-    console.log(`ucketName=${url} visibility=${visibility} , filepath=${localFilepath}`)
+    console.log(
+      `ucketName=${url} visibility=${visibility} , filepath=${localFilepath}`
+    );
     // @ts-ignore
-    const [bucketName, filePath] = parseBucketAndObject(url)
+    const [bucketName, filePath] = parseBucketAndObject(url);
     // const data = await fs.readFileSync(filepath);
     let visibilityType: keyof typeof VisibilityType;
     switch (visibility) {
@@ -40,11 +42,11 @@ export async function putObject(
     const publicKey = String(config.get("publicKey"));
 
     const fileData = await fs.promises.readFile(localFilepath);
-    const file = new Blob([fileData], { type: 'text/xml' });
+    const file = new Blob([fileData], { type: "text/xml" });
     // // const blob = new Blob([fileData], { type: "text/xml" });
     // const file = new File([data], filepath);
 
-    console.log(file.type)
+    console.log(file.type);
     //TODO fix this
     const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(
       "0xE42B5AD90AfF1e8Ad90F76e02541A71Ca9D41A11"
@@ -77,14 +79,14 @@ export async function putObject(
     };
     const obj = await GreenfieldClient.client.object.createObject(msg);
     const simulateInfo = await obj
-        .simulate({
-          denom: "BNB",
-        })
-        .catch(() => {});
+      .simulate({
+        denom: "BNB",
+      })
+      .catch(() => {});
 
     const privateKey = await store.getPrivateKeyData(
-        String(config.get("privateKey")),
-        ""
+      String(config.get("privateKey")),
+      ""
     );
 
     const broadcast = await obj.broadcast({
