@@ -12,7 +12,8 @@
     "moduleResolution": "node",                          /* Specify how TypeScript looks up a file from a given module specifier. */
     "rootDir": "./",                                  /* Specify the root folder within your source files. */
     "types": [                                           /* Specify type package names to be included without being referenced in a source file. */
-      "node"
+      "node",
+      "jest",
     ],
     "resolveJsonModule": true,                           /* Enable importing .json files. */
 
