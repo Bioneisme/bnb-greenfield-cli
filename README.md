@@ -76,3 +76,5 @@ Display information about the current configuration
 ```
 greenfield-cli system info
 ```
+
+## Documentation
