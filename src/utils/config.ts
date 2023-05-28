@@ -38,5 +38,8 @@ export const config = new Conf({
     publicKey: {
       type: "string",
     },
+    spAddress: {
+      type: "string",
+    },
   },
 });

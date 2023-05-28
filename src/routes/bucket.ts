@@ -6,10 +6,10 @@ import { updateChargeQuota } from "../commands/bucket/updateChargeQuota";
 const bucket = program.command("bucket").description("bucket");
 
 bucket
-  .command("create <spAddress> <bucketName>")
+  .command("create <bucketName>")
   .description("creates a bucket")
-  .action(async (spAddress, bucketName) => {
-    await createBucket(spAddress, bucketName);
+  .action(async (bucketName) => {
+    await createBucket(bucketName);
   });
 
 bucket

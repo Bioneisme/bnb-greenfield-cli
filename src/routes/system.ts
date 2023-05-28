@@ -3,6 +3,7 @@ import { changeRpcUrl } from "../commands/system/changeRpcUrl";
 import { changeChainId } from "../commands/system/changeChainId";
 import { systemInfo } from "../commands/system/systemInfo";
 import { changePrivateKey } from "../commands/system/changePrivateKey";
+import { changeSP } from "../commands/system/changeSP";
 
 const system = program.command("system").description("system settings");
 
@@ -27,6 +28,12 @@ system
     await changePrivateKey(pub, priv, password);
   });
 
+system
+  .command("sp-address <address>")
+  .description("set sp address")
+  .action(async (address) => {
+    await changeSP(address);
+  });
 system
   .command("info")
   .description("show system info")
