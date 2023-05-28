@@ -3,10 +3,10 @@ import { MsgCreatePaymentAccount } from "@bnb-chain/greenfield-cosmos-types/gree
 import { config } from "../../utils/config";
 import { createFileStore } from "../../helpers/keystore";
 import web3Utils from "web3-utils";
+import { getPrivateKey } from "../../helpers/password";
 
 export async function createPaymentAccount() {
   try {
-    const store = await createFileStore();
     const publicKey = String(config.get("publicKey"));
     if (!web3Utils.isAddress(publicKey)) {
       console.error(`Public key '${publicKey}' is not a valid address`);
@@ -21,10 +21,8 @@ export async function createPaymentAccount() {
     const simulateInfo = await paymentTx.simulate({
       denom: "BNB",
     });
-    const privateKey = await store.getPrivateKeyData(
-      String(config.get("privateKey")),
-      ""
-    );
+    const privateKey = await getPrivateKey();
+
     const broadcast = await paymentTx
       .broadcast({
         denom: "BNB",

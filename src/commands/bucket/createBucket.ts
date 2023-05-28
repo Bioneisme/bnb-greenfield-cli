@@ -4,9 +4,9 @@ import {
   ISpInfo,
 } from "@bnb-chain/greenfield-chain-sdk";
 import { config } from "../../utils/config";
-import { createFileStore } from "../../helpers/keystore";
+import { getPrivateKey } from "../../helpers/password";
 
-export async function createBucket(address: string, bucketName: string) {
+export async function createBucket(bucketName: string) {
   try {
     if (!/^[a-z0-9,-]+$/.test(bucketName)) {
       console.error(
@@ -14,12 +14,23 @@ export async function createBucket(address: string, bucketName: string) {
       );
       return;
     }
-    const store = await createFileStore();
     const publicKey = String(config.get("publicKey"));
+    if (!publicKey || publicKey === "undefined") {
+      console.error(
+        "public key is required. Please set it in the system config"
+      );
+      return;
+    }
+    const address = String(config.get("spAddress"));
+    if (!address || address === "undefined") {
+      console.error(
+        "storage provider address is required. Please set it in the system config"
+      );
+      return;
+    }
 
     const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(address);
     if (sp != null) {
-      console.log(sp);
       const spInfo: ISpInfo = {
         endpoint: sp.endpoint,
         sealAddress: sp.sealAddress,
@@ -42,10 +53,7 @@ export async function createBucket(address: string, bucketName: string) {
         })
         .catch(() => {});
 
-      const privateKey = await store.getPrivateKeyData(
-        String(config.get("privateKey")),
-        ""
-      );
+      const privateKey = await getPrivateKey();
 
       const broadcast = await bucket.broadcast({
         denom: "BNB",

@@ -2,6 +2,7 @@ import { GreenfieldClient } from "../../utils/sdk";
 import { config } from "../../utils/config";
 import web3Utils from "web3-utils";
 import { createFileStore } from "../../helpers/keystore";
+import { getPrivateKey } from "../../helpers/password";
 
 export async function transfer(toAddress: string, amount: string) {
   try {
@@ -19,7 +20,6 @@ export async function transfer(toAddress: string, amount: string) {
       console.error(`Amount '${amount}' is not a valid amount`);
       return;
     }
-    const store = await createFileStore();
 
     const transferTx = await GreenfieldClient.client.account.transfer({
       fromAddress,
@@ -34,10 +34,8 @@ export async function transfer(toAddress: string, amount: string) {
     const simulateInfo = await transferTx.simulate({
       denom: "BNB",
     });
-    const privateKey = await store.getPrivateKeyData(
-      String(config.get("privateKey")),
-      ""
-    );
+    const privateKey = await getPrivateKey();
+
     const broadcast = await transferTx.broadcast({
       denom: "BNB",
       gasLimit: Number(simulateInfo.gasLimit),
