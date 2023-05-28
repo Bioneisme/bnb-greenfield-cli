@@ -1,56 +1,64 @@
 import { GreenfieldClient } from "../../utils/sdk";
-import {IGetCreateBucketApproval, ISpInfo} from "@bnb-chain/greenfield-chain-sdk";
-import {VisibilityType} from "@bnb-chain/greenfield-cosmos-types/greenfield/storage/common";
-import {getStorageProviderInfo} from "../sp/getStorageProviderInfo";
+import {
+  IGetCreateBucketApproval,
+  ISpInfo,
+} from "@bnb-chain/greenfield-chain-sdk";
+import { config } from "../../utils/config";
+import { createFileStore } from "../../helpers/keystore";
 
-// Create an object with the required properties
-
-export async function createBucket(address:string,accountAddress:string, bucketName:string) {
-    try {
-        const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(
-            address
-        );
-        if(sp!=null){
-            const spInfo:ISpInfo = {
-                endpoint:sp.endpoint,
-                primarySpAddress:sp.fundingAddress,
-                sealAddress:sp.sealAddress,
-                secondarySpAddresses:[],
-            }
-            const bucketApproval:IGetCreateBucketApproval = {
-                bucketName:bucketName,
-                creator:accountAddress,
-                visibility: "VISIBILITY_TYPE_UNSPECIFIED",
-                chargedReadQuota:"0.1",
-                spInfo: spInfo,
-            }
-            await GreenfieldClient.client.bucket.createBucket(
-                bucketApproval
-            )
-            console.log(`bucket created`);
-        }else{
-            const spArr = await GreenfieldClient.client.sp.getStorageProviders()
-            const sp =spArr[Math.floor(Math.random() * spArr.length)]
-            const spInfo:ISpInfo = {
-                endpoint:sp.endpoint,
-                primarySpAddress:sp.fundingAddress,
-                sealAddress:sp.sealAddress,
-                secondarySpAddresses:[],
-            }
-            const bucketApproval:IGetCreateBucketApproval = {
-                bucketName:bucketName,
-                creator:accountAddress,
-                visibility: "VISIBILITY_TYPE_UNSPECIFIED",
-                chargedReadQuota:"",
-                spInfo: spInfo,
-            }
-            await GreenfieldClient.client.bucket.createBucket(
-                bucketApproval
-            )
-            console.log(`bucket created`);
-        }
-
-    } catch (e) {
-        console.error(`bucket creation failed: ${e}`);
+export async function createBucket(address: string, bucketName: string) {
+  try {
+    if (!/^[a-z0-9,-]+$/.test(bucketName)) {
+      console.error(
+        "bucket name can only include lowercase letters, numbers, commas and hyphen"
+      );
+      return;
     }
+    const store = await createFileStore();
+    const publicKey = String(config.get("publicKey"));
+
+    const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(address);
+    if (sp != null) {
+      console.log(sp);
+      const spInfo: ISpInfo = {
+        endpoint: sp.endpoint,
+        sealAddress: sp.sealAddress,
+        primarySpAddress: sp.operatorAddress,
+        secondarySpAddresses: [],
+      };
+      const bucketApproval: IGetCreateBucketApproval = {
+        bucketName: bucketName,
+        creator: publicKey,
+        visibility: "VISIBILITY_TYPE_PUBLIC_READ",
+        chargedReadQuota: "0",
+        spInfo: spInfo,
+      };
+      const bucket = await GreenfieldClient.client.bucket.createBucket(
+        bucketApproval
+      );
+      const simulateInfo = await bucket
+        .simulate({
+          denom: "BNB",
+        })
+        .catch(() => {});
+
+      const privateKey = await store.getPrivateKeyData(
+        String(config.get("privateKey")),
+        ""
+      );
+
+      const broadcast = await bucket.broadcast({
+        denom: "BNB",
+        gasLimit: Number(simulateInfo?.gasLimit || 2400),
+        gasPrice: simulateInfo?.gasPrice || "5000000000000",
+        payer: publicKey,
+        granter: "",
+        privateKey: String("0x" + privateKey),
+      });
+
+      console.log(broadcast);
+    }
+  } catch (e) {
+    console.error(`bucket creation failed: ${e}`);
+  }
 }
