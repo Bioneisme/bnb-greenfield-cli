@@ -8,7 +8,7 @@ const object = program.command("object").description("object");
 
 object
   .command(
-    "put --content-type 'text/xml' --visibility=<visibility> <filePath> <bucketNameAndPath>"
+    "put <visibility> <filePath> <bucketNameAndPath>"
   )
   .description(
     'The "object put" command is used to upload a file from local which is less than 2G.'
@@ -18,9 +18,9 @@ object
   });
 
 object
-  .command("put create-folder 'text/xml' <bucketNameAndPath>")
+  .command("create-folder <bucketNameAndPath>")
   .description(
-    'The "object put" command is used to upload a file from local which is less than 2G.'
+    'Creates a Folder.'
   )
   .action(async (bucketNameAndPath) => {
     await createFolder(bucketNameAndPath);
