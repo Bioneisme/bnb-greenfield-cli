@@ -27,7 +27,7 @@ export async function deleteBucket(bucketName: string) {
     }
     const bucket = await GreenfieldClient.client.bucket.deleteBucket({
       bucketName,
-      operator: address,
+      operator: publicKey,
     });
 
     const simulateInfo = await bucket

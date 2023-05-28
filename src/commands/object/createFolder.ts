@@ -1,7 +1,7 @@
 import { GreenfieldClient } from "../../utils/sdk";
 import { IGetCreateObjectApproval } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types";
 import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
-import { parseBucketAndObject } from "../../utils/helpers";
+import { parseBucketAndObject } from "../../helpers/parse";
 import { config } from "../../utils/config";
 
 export async function createFolder(urlPath: string) {

@@ -1,6 +1,6 @@
 import { GreenfieldClient } from "../../utils/sdk";
 import fs from "fs";
-import { parseBucketAndObject } from "../../utils/helpers";
+import { parseBucketAndObject } from "../../helpers/parse";
 import { IGetObjectPropsType } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types/storage";
 import { File } from "buffer";
 

@@ -6,7 +6,7 @@ import fs from "fs";
 import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
 import { createFileStore } from "../../helpers/keystore";
 import { config } from "../../utils/config";
-import { parseBucketAndObject } from "../../utils/helpers";
+import { parseBucketAndObject } from "../../helpers/parse";
 import { getPrivateKey } from "../../helpers/password";
 
 // Create an object with the required properties
