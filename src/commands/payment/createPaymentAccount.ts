@@ -20,14 +20,14 @@ export async function createPaymentAccount() {
 
     const simulateInfo = await paymentTx.simulate({
       denom: "BNB",
-    });
+    }).catch(() => {});
     const privateKey = await getPrivateKey();
 
     const broadcast = await paymentTx
       .broadcast({
         denom: "BNB",
-        gasLimit: Number(simulateInfo.gasLimit),
-        gasPrice: simulateInfo.gasPrice,
+        gasLimit: Number(simulateInfo?.gasLimit || 2400),
+        gasPrice: simulateInfo?.gasPrice || "5000000000000",
         payer: publicKey,
         granter: "",
         privateKey: String("0x" + privateKey),
