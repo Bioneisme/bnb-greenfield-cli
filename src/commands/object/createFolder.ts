@@ -2,8 +2,7 @@ import { GreenfieldClient } from "../../utils/sdk";
 import { IGetCreateObjectApproval } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types";
 import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
 import { parseBucketAndObject } from "../../utils/helpers";
-import {config} from "../../utils/config";
-
+import { config } from "../../utils/config";
 
 export async function createFolder(urlPath: string) {
   try {
@@ -13,27 +12,25 @@ export async function createFolder(urlPath: string) {
       console.error(
         "URL is not in the correct format. Unable to parse bucket name and object name."
       );
-        return;
+      return;
     }
 
     const publicKey = String(config.get("publicKey"));
     if (!publicKey || publicKey === "undefined") {
       console.error(
-          "public key is required. Please set it in the system config"
+        "public key is required. Please set it in the system config"
       );
       return;
     }
     const address = String(config.get("spAddress"));
     if (!address || address === "undefined") {
       console.error(
-          "storage provider address is required. Please set it in the system config"
+        "storage provider address is required. Please set it in the system config"
       );
       return;
     }
 
-    const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(
-      address
-    );
+    const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(address);
     if (sp == null) {
       console.error("SP not found");
       return;

@@ -10,6 +10,8 @@ import "./system";
 import "./payment";
 import "./bucket";
 import "./object";
+import "./feegrant";
+import "./crosschain";
 
 clear();
 console.log(

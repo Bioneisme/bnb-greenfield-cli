@@ -7,7 +7,7 @@ import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
 import { createFileStore } from "../../helpers/keystore";
 import { config } from "../../utils/config";
 import { parseBucketAndObject } from "../../utils/helpers";
-import {getPrivateKey} from "../../helpers/password";
+import { getPrivateKey } from "../../helpers/password";
 
 // Create an object with the required properties
 
@@ -20,14 +20,14 @@ export async function putObject(
     const publicKey = String(config.get("publicKey"));
     if (!publicKey || publicKey === "undefined") {
       console.error(
-          "public key is required. Please set it in the system config"
+        "public key is required. Please set it in the system config"
       );
       return;
     }
     const address = String(config.get("spAddress"));
     if (!address || address === "undefined") {
       console.error(
-          "storage provider address is required. Please set it in the system config"
+        "storage provider address is required. Please set it in the system config"
       );
       return;
     }
@@ -56,9 +56,7 @@ export async function putObject(
     const fileData = await fs.promises.readFile(localFilepath);
     const file = new Blob([fileData], { type: "text/xml" });
 
-    const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(
-      address
-    );
+    const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(address);
 
     if (sp == null) {
       console.log("SP not found");
