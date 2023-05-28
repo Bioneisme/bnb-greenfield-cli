@@ -1,28 +1,41 @@
 import { GreenfieldClient } from "../../utils/sdk";
-import { MsgUpdateBucketInfo } from "@bnb-chain/greenfield-cosmos-types/greenfield/storage/tx";
 import { IGetCreateObjectApproval } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types";
-import fs from "fs";
 import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
 import { parseBucketAndObject } from "../../utils/helpers";
+import {config} from "../../utils/config";
 
-// Create an object with the required properties
 
 export async function createFolder(urlPath: string) {
   try {
     // @ts-ignore
     const [bucketName, objectName] = parseBucketAndObject(urlPath);
     if (!bucketName || !objectName) {
-      throw new Error(
+      console.error(
         "URL is not in the correct format. Unable to parse bucket name and object name."
       );
+        return;
     }
 
-    //TODO fix this
+    const publicKey = String(config.get("publicKey"));
+    if (!publicKey || publicKey === "undefined") {
+      console.error(
+          "public key is required. Please set it in the system config"
+      );
+      return;
+    }
+    const address = String(config.get("spAddress"));
+    if (!address || address === "undefined") {
+      console.error(
+          "storage provider address is required. Please set it in the system config"
+      );
+      return;
+    }
+
     const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(
-      "https://gnfd-testnet-sp-3.bnbchain.org"
+      address
     );
     if (sp == null) {
-      console.log("SP not found");
+      console.error("SP not found");
       return;
     }
     const spInfo: ISpInfo = {

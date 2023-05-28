@@ -1,8 +1,7 @@
-import { putObject } from "../commands/bucket/putObject";
-import bucket from "./bucket";
+import { putObject } from "../commands/object/putObject";
 import { program } from "commander";
-import { createFolder } from "../commands/bucket/createFolder";
-import { downloadObject } from "../commands/bucket/downloadObject";
+import { createFolder } from "../commands/object/createFolder";
+import { downloadObject } from "../commands/object/downloadObject";
 
 const object = program.command("object").description("object");
 

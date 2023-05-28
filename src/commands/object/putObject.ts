@@ -7,6 +7,7 @@ import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
 import { createFileStore } from "../../helpers/keystore";
 import { config } from "../../utils/config";
 import { parseBucketAndObject } from "../../utils/helpers";
+import {getPrivateKey} from "../../helpers/password";
 
 // Create an object with the required properties
 
@@ -16,12 +17,25 @@ export async function putObject(
   localFilepath: string
 ) {
   try {
+    const publicKey = String(config.get("publicKey"));
+    if (!publicKey || publicKey === "undefined") {
+      console.error(
+          "public key is required. Please set it in the system config"
+      );
+      return;
+    }
+    const address = String(config.get("spAddress"));
+    if (!address || address === "undefined") {
+      console.error(
+          "storage provider address is required. Please set it in the system config"
+      );
+      return;
+    }
     console.log(
-      `ucketName=${url} visibility=${visibility} , filepath=${localFilepath}`
+      `bucketName=${url} visibility=${visibility} , filepath=${localFilepath}`
     );
     // @ts-ignore
     const [bucketName, filePath] = parseBucketAndObject(url);
-    // const data = await fs.readFileSync(filepath);
     let visibilityType: keyof typeof VisibilityType;
     switch (visibility) {
       case "public-read":
@@ -38,18 +52,12 @@ export async function putObject(
         visibilityType = "UNRECOGNIZED";
         break;
     }
-    const store = await createFileStore();
-    const publicKey = String(config.get("publicKey"));
 
     const fileData = await fs.promises.readFile(localFilepath);
     const file = new Blob([fileData], { type: "text/xml" });
-    // // const blob = new Blob([fileData], { type: "text/xml" });
-    // const file = new File([data], filepath);
 
-    console.log(file.type);
-    //TODO fix this
     const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(
-      "0xE42B5AD90AfF1e8Ad90F76e02541A71Ca9D41A11"
+      address
     );
 
     if (sp == null) {
@@ -84,10 +92,7 @@ export async function putObject(
       })
       .catch(() => {});
 
-    const privateKey = await store.getPrivateKeyData(
-      String(config.get("privateKey")),
-      ""
-    );
+    const privateKey = await getPrivateKey();
 
     const broadcast = await obj.broadcast({
       denom: "BNB",
