@@ -78,3 +78,4 @@ greenfield-cli system info
 ```
 
 ## Documentation
+https://bioneisme.github.io/greenfield-cli-docs/docs/installation
