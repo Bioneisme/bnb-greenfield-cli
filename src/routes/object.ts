@@ -1,15 +1,12 @@
-import { putObject } from "../commands/bucket/putObject";
-import bucket from "./bucket";
+import { putObject } from "../commands/object/putObject";
 import { program } from "commander";
-import { createFolder } from "../commands/bucket/createFolder";
-import { downloadObject } from "../commands/bucket/downloadObject";
+import { createFolder } from "../commands/object/createFolder";
+import { downloadObject } from "../commands/object/downloadObject";
 
 const object = program.command("object").description("object");
 
 object
-  .command(
-    "put <visibility> 1th> <bucketNameAndPath>"
-  )
+  .command("put <visibility> <filePath> <bucketNameAndPath>")
   .description(
     'The "object put" command is used to upload a file from local which is less than 2G.'
   )
@@ -19,9 +16,7 @@ object
 
 object
   .command("create-folder <bucketNameAndPath>")
-  .description(
-    'Creates a Folder.'
-  )
+  .description("Creates a Folder.")
   .action(async (bucketNameAndPath) => {
     await createFolder(bucketNameAndPath);
   });

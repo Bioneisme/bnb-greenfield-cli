@@ -11,6 +11,9 @@ import "./payment";
 import "./bucket";
 import "./object";
 import "./group";
+import "./feegrant";
+import "./crosschain";
+
 clear();
 console.log(
   chalk.green(

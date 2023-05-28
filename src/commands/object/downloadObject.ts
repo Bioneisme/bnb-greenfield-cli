@@ -1,8 +1,5 @@
 import { GreenfieldClient } from "../../utils/sdk";
-import { MsgUpdateBucketInfo } from "@bnb-chain/greenfield-cosmos-types/greenfield/storage/tx";
-import { IGetCreateObjectApproval } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types";
 import fs from "fs";
-import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
 import { parseBucketAndObject } from "../../utils/helpers";
 import { IGetObjectPropsType } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types/storage";
 import { File } from "buffer";

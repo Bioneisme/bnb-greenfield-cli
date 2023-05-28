@@ -4,9 +4,10 @@ import { MsgUpdateBucketInfo } from "@bnb-chain/greenfield-cosmos-types/greenfie
 import { IGetCreateObjectApproval } from "@bnb-chain/greenfield-chain-sdk/dist/esm/types";
 import fs from "fs";
 import { ISpInfo } from "@bnb-chain/greenfield-chain-sdk";
-import {createFileStore} from "../../helpers/keystore";
-import {config} from "../../utils/config";
-import {parseBucketAndObject} from "../../utils/helpers";
+import { createFileStore } from "../../helpers/keystore";
+import { config } from "../../utils/config";
+import { parseBucketAndObject } from "../../utils/helpers";
+import { getPrivateKey } from "../../helpers/password";
 
 // Create an object with the required properties
 
@@ -16,10 +17,25 @@ export async function putObject(
   localFilepath: string
 ) {
   try {
-    console.log(`ucketName=${url} visibility=${visibility} , filepath=${localFilepath}`)
+    const publicKey = String(config.get("publicKey"));
+    if (!publicKey || publicKey === "undefined") {
+      console.error(
+        "public key is required. Please set it in the system config"
+      );
+      return;
+    }
+    const address = String(config.get("spAddress"));
+    if (!address || address === "undefined") {
+      console.error(
+        "storage provider address is required. Please set it in the system config"
+      );
+      return;
+    }
+    console.log(
+      `bucketName=${url} visibility=${visibility} , filepath=${localFilepath}`
+    );
     // @ts-ignore
-    const [bucketName, filePath] = parseBucketAndObject(url)
-    // const data = await fs.readFileSync(filepath);
+    const [bucketName, filePath] = parseBucketAndObject(url);
     let visibilityType: keyof typeof VisibilityType;
     switch (visibility) {
       case "public-read":
@@ -36,19 +52,11 @@ export async function putObject(
         visibilityType = "UNRECOGNIZED";
         break;
     }
-    const store = await createFileStore();
-    const publicKey = String(config.get("publicKey"));
 
     const fileData = await fs.promises.readFile(localFilepath);
-    const file = new Blob([fileData], { type: 'text/xml' });
-    // // const blob = new Blob([fileData], { type: "text/xml" });
-    // const file = new File([data], filepath);
+    const file = new Blob([fileData], { type: "text/xml" });
 
-    console.log(file.type)
-    //TODO fix this
-    const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(
-      "0xE42B5AD90AfF1e8Ad90F76e02541A71Ca9D41A11"
-    );
+    const sp = await GreenfieldClient.client.sp.getStorageProviderInfo(address);
 
     if (sp == null) {
       console.log("SP not found");
@@ -77,15 +85,12 @@ export async function putObject(
     };
     const obj = await GreenfieldClient.client.object.createObject(msg);
     const simulateInfo = await obj
-        .simulate({
-          denom: "BNB",
-        })
-        .catch(() => {});
+      .simulate({
+        denom: "BNB",
+      })
+      .catch(() => {});
 
-    const privateKey = await store.getPrivateKeyData(
-        String(config.get("privateKey")),
-        ""
-    );
+    const privateKey = await getPrivateKey();
 
     const broadcast = await obj.broadcast({
       denom: "BNB",
