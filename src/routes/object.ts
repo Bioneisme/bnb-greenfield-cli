@@ -8,7 +8,7 @@ const object = program.command("object").description("object");
 
 object
   .command(
-    "put <visibility> <filePath> <bucketNameAndPath>"
+    "put <visibility> 1th> <bucketNameAndPath>"
   )
   .description(
     'The "object put" command is used to upload a file from local which is less than 2G.'

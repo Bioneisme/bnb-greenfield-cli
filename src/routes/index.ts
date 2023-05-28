@@ -10,7 +10,7 @@ import "./system";
 import "./payment";
 import "./bucket";
 import "./object";
-
+import "./group";
 clear();
 console.log(
   chalk.green(
