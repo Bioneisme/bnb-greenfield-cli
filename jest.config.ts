@@ -3,7 +3,7 @@ export default async (): Promise<Config.InitialOptions> => {
   return {
     preset: "ts-jest",
     displayName: {
-      name: "placeNameOfYourAppHere",
+      name: "Greenfield CLI",
       color: "greenBright",
     },
     verbose: true,

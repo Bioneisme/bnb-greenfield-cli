@@ -18,9 +18,11 @@ export async function createPaymentAccount() {
     const paymentTx =
       await GreenfieldClient.client.account.createPaymentAccount(msg);
 
-    const simulateInfo = await paymentTx.simulate({
-      denom: "BNB",
-    }).catch(() => {});
+    const simulateInfo = await paymentTx
+      .simulate({
+        denom: "BNB",
+      })
+      .catch(() => {});
     const privateKey = await getPrivateKey();
 
     const broadcast = await paymentTx
